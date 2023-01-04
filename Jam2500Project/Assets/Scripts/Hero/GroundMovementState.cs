@@ -93,15 +93,6 @@ public class GroundMovementState : HeroState
 
         var plane = new Vector3(_direction.x, 0f, _direction.z).normalized;
 
-        if (state == MovementState.Idle)
-        {
-            //animator.SetBool(_runMotionKey, false);
-
-            //SoundAudioManager.Instance
-            //  .StopSound(SoundAudioManager.AudioData.Kind.Movement);
-            return;
-        }
-
         float speed = 0f;
 
         switch (state)

@@ -75,7 +75,7 @@ public class FlyState : HeroState
         while (progress < 1f)
         {
             expiredSeconds += Time.fixedDeltaTime;
-            progress = (float)(expiredSeconds / 2f);
+            progress = (float)(expiredSeconds / 1f);
 
             var newY = Mathf.Lerp(y, Camera.main.transform.eulerAngles.y, progress);
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, newY, transform.eulerAngles.z);

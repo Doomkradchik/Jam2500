@@ -499,8 +499,8 @@ MonoBehaviour:
   rotationSpace: {fileID: 0}
   updateMode: 2
   lockCursor: 1
-  smoothFollow: 0
-  offset: {x: 0, y: 1.5, z: 0.5}
+  smoothFollow: 1
+  offset: {x: 0, y: 1.5, z: 0.53}
   followSpeed: 10
   rotationSensitivity: 3.5
   yMinLimit: -37.6
@@ -941,13 +941,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementProperties:
-    _walkSpeed: 1.5
-    _runSpeed: 3.69
+    _walkSpeed: 4.94
+    _runSpeed: 8.71
     _angleVelocity: 22
     _smoothTime: 0.1
   _jumpProperties:
     _height: 3.72
-    _duration: 2.7
+    _duration: 1.14
     _verticalAnimation:
       serializedVersion: 2
       m_Curve:
@@ -995,10 +995,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _quietMode:
-    _horizontalSpeed: 2
+    _horizontalSpeed: 2.22
     _verticalSpeed: 5.12
   _directedMode:
-    _speed: 6.25
+    _speed: 13.3
     _slopeAngle: 60
     _transitionRatio: 2.98
   _start_height: 7.5
