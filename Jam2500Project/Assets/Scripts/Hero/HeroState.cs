@@ -3,6 +3,7 @@ using System.Collections;
 
 public abstract class HeroState : MonoBehaviour
 {
+    public bool Ready { get; protected set; } = false;
     public abstract void Enter();
     public abstract void UpdateState();
     public abstract void Exit();
@@ -10,7 +11,7 @@ public abstract class HeroState : MonoBehaviour
 
 public class StateMachine
 {
-    HeroState currentState;
+    internal HeroState currentState { get; private set; }
 
     public void ChangeState(HeroState newState)
     {

@@ -20,6 +20,9 @@ namespace RootMotion
 			FixedLateUpdate
 		}
 
+		public bool Freeze { get; set; } = false;
+		public bool InfluenceOnCharacterRotation { get; set; } = false;
+
 		public Transform target; // The target Transform to follow
 		public Transform rotationSpace; // If assigned, will use this Transform's rotation as the rotation space instead of the world space. Useful with spherical planets.
 		public UpdateMode updateMode = UpdateMode.LateUpdate; // When to update the camera?
@@ -67,6 +70,8 @@ namespace RootMotion
 		private Vector3 lastUp;
 		private float blockedDistance = 10f, blockedDistanceV;
 
+		private HeroController _hero;
+
 		public void SetAngles(Quaternion rotation)
 		{
 			Vector3 euler = rotation.eulerAngles;
@@ -93,6 +98,10 @@ namespace RootMotion
 			cam = GetComponent<Camera>();
 
 			lastUp = rotationSpace != null ? rotationSpace.up : Vector3.up;
+
+			_hero = FindObjectOfType<HeroController>();
+			if (_hero == null)
+				throw new System.InvalidOperationException();
 		}
 
 		protected virtual void Update()
@@ -147,6 +156,7 @@ namespace RootMotion
 		// Update the camera transform
 		public void UpdateTransform()
 		{
+			if(Freeze == false)
 			UpdateTransform(Time.deltaTime);
 		}
 
@@ -198,6 +208,13 @@ namespace RootMotion
 			}
 
 			transform.rotation = rotation;
+
+            if (InfluenceOnCharacterRotation)
+            {
+				//	var xz_rotation= Quaternion.LookRotation(transform.forward, Vector3.up);
+				//var dirRotation = Quaternion.LookRotation(transform.forward, Vector3.up);
+				_hero.transform.rotation = Quaternion.Euler(_hero.transform.eulerAngles.x, rotation.eulerAngles.y, _hero.transform.eulerAngles.z);
+            }
 		}
 
 		// Zoom input

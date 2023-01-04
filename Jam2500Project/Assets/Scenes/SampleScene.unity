@@ -503,7 +503,7 @@ MonoBehaviour:
   offset: {x: 0, y: 1.5, z: 0.5}
   followSpeed: 10
   rotationSensitivity: 3.5
-  yMinLimit: -20
+  yMinLimit: -37.6
   yMaxLimit: 80
   rotateAlways: 1
   rotateOnLeftButton: 0
@@ -708,6 +708,99 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1838966625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1838966629}
+  - component: {fileID: 1838966628}
+  - component: {fileID: 1838966627}
+  - component: {fileID: 1838966626}
+  m_Layer: 0
+  m_Name: Cube (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1838966626
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838966625}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1838966627
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838966625}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1838966628
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838966625}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1838966629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838966625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.6867473, y: 47.2, z: -4.2274904}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1846725261
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,9 +813,10 @@ GameObject:
   - component: {fileID: 1846725266}
   - component: {fileID: 1846725265}
   - component: {fileID: 1846725262}
+  - component: {fileID: 1846725264}
   - component: {fileID: 1846725263}
   - component: {fileID: 1846725268}
-  - component: {fileID: 1846725264}
+  - component: {fileID: 1846725269}
   m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
@@ -758,6 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 466a76506bf8c4044a536e7b13887394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _toGroundDistance: 0
 --- !u!65 &1846725264
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -846,7 +941,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementProperties:
-    _unitsPerSecond: 2.02
+    _walkSpeed: 1.5
+    _runSpeed: 3.69
     _angleVelocity: 22
     _smoothTime: 0.1
   _jumpProperties:
@@ -886,3 +982,23 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   _grounded: 0
+--- !u!114 &1846725269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846725261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1dc1785ccb1e545a40f4c173ce5a1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _quietMode:
+    _horizontalSpeed: 2
+    _verticalSpeed: 5.12
+  _directedMode:
+    _speed: 6.25
+    _slopeAngle: 60
+    _transitionRatio: 2.98
+  _start_height: 7.5

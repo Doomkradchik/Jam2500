@@ -18,7 +18,8 @@ public class GroundMovementState : HeroState
     [System.Serializable]
     public struct MovementProperties
     {
-        public float _unitsPerSecond;
+        public float _walkSpeed;
+        public float _runSpeed;
         public float _angleVelocity;
         public float _smoothTime;
     }
@@ -37,26 +38,44 @@ public class GroundMovementState : HeroState
     public bool Freeze { get; set; }
     private Coroutine _jumpAnimation;
     
-    private const float RAY_MAGNITUDE = 1.4f;
+    public enum MovementState
+    {
+        Idle,
+        Walk,
+        Run
+    }
 
     public override void Enter()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.isKinematic = false;
+        _rigidbody.useGravity = true;
+
+        Ready = true;
     }
 
     public override void Exit()
     {
+        StopAllCoroutines();
+        Ready = false;
     }
+
 
     public override void UpdateState()
     {
-        Move(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
+        var input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        MovementState state = MovementState.Idle;
+
+        if (input.magnitude != 0)
+            state = Input.GetKey(KeyCode.LeftShift) ? MovementState.Run : MovementState.Walk;
+
+        Move(input, state);
 
         if (Input.GetKeyDown(KeyCode.Space))
             TryPlayJumpAnimation(_jumpProperties);
     }
 
-    protected void Move(Vector2 input)
+    protected void Move(Vector2 input, MovementState state)
     {
         if (Freeze)
         {
@@ -66,7 +85,7 @@ public class GroundMovementState : HeroState
             return;
         }
 
-
+        
 
         var camera = Camera.main.transform;
         var _direction = camera.right * input.x +
@@ -74,7 +93,7 @@ public class GroundMovementState : HeroState
 
         var plane = new Vector3(_direction.x, 0f, _direction.z).normalized;
 
-        if (plane == Vector3.zero)
+        if (state == MovementState.Idle)
         {
             //animator.SetBool(_runMotionKey, false);
 
@@ -83,13 +102,25 @@ public class GroundMovementState : HeroState
             return;
         }
 
-        //animator.SetBool(_runMotionKey, true);
+        float speed = 0f;
+
+        switch (state)
+        {
+            case MovementState.Idle:
+                return;
+            case MovementState.Walk:
+                speed = _movementProperties._walkSpeed;
+                break;
+            case MovementState.Run:
+                speed = _movementProperties._runSpeed;
+                break;
+        }
 
         var targetAngle = Mathf.Atan2(plane.x, plane.z) * Mathf.Rad2Deg;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y,
             targetAngle, ref _movementProperties._angleVelocity, _movementProperties._smoothTime);
 
-        var offset = plane * _movementProperties._unitsPerSecond * Time.fixedDeltaTime;
+        var offset = plane * speed * Time.fixedDeltaTime;
 
         // _rigidbody.MovePosition(_rigidbody.position + offset);
         transform.position += offset;
