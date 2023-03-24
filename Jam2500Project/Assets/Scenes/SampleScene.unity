@@ -817,6 +817,7 @@ GameObject:
   - component: {fileID: 1846725263}
   - component: {fileID: 1846725268}
   - component: {fileID: 1846725269}
+  - component: {fileID: 1846725270}
   m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
@@ -1002,3 +1003,22 @@ MonoBehaviour:
     _slopeAngle: 60
     _transitionRatio: 2.98
   _start_height: 7.5
+--- !u!95 &1846725270
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846725261}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -22,6 +22,23 @@ public class FlyState : HeroState
     protected float _currentAngle = 0f;
     protected RootMotion.CameraController _cameraController;
 
+    protected Coroutine _onFlymodeChanged;
+
+    protected FlyMode _mode;
+    protected FlyMode Mode
+    {
+        get => _mode;
+        set
+        {
+            if(value != _mode)
+            {
+                if (_onFlymodeChanged != null)
+                    StopCoroutine(_onFlymodeChanged);
+                _onFlymodeChanged = StartCoroutine(OnFlyingModeChanged(value));
+                _mode = value;
+            }
+        }
+    }
 
     [System.Serializable]
     public struct QuietFlightProperties
@@ -39,17 +56,12 @@ public class FlyState : HeroState
         [Min(1f)]
         public float _transitionRatio;
     }
-  
-
-
-    protected FlyMode _mode;
 
     public enum FlyMode : int
     {
         Quiet = 0,
         Directed = 1
     }
-
 
     public override void Enter()
         => StartCoroutine(EnterRoutine());
@@ -61,7 +73,7 @@ public class FlyState : HeroState
         rb.useGravity = false;
 
         var target = transform.position + Vector3.up * _start_height;
-        _mode = FlyMode.Quiet;
+        Mode = FlyMode.Quiet;
 
         _cameraController = Camera.main.GetComponent<RootMotion.CameraController>();
         _cameraController.InfluenceOnCharacterRotation = true;
@@ -91,7 +103,6 @@ public class FlyState : HeroState
     public override void Exit() 
     {
         Ready = false;
-        _cameraController.InfluenceOnCharacterRotation = false;
     }
 
     public override void UpdateState()
@@ -100,9 +111,10 @@ public class FlyState : HeroState
             return;
 
         var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        _mode = (FlyMode)(Input.GetKey(KeyCode.LeftShift) && input.y > 0f ? 1 : 0);
-        var angle = _mode == FlyMode.Directed ? _directedMode._slopeAngle : 0f; 
-        switch (_mode)
+        Mode = (FlyMode)(Input.GetKey(KeyCode.LeftShift) && input.y > 0f ? 1 : 0); // define mode
+        var angle = Mode == FlyMode.Directed ? _directedMode._slopeAngle : 0f; 
+
+        switch (Mode)
         {
             case FlyMode.Quiet:
                 DoQuietFlight(input);
@@ -137,4 +149,10 @@ public class FlyState : HeroState
         transform.position += vertical * Time.fixedDeltaTime;
     }
 
+    private IEnumerator OnFlyingModeChanged(FlyMode newMode)
+    {
+        yield return new WaitForSeconds(.6f);
+
+       // _cameraController.smoothFollow = newMode == FlyMode.Quiet ? false : true;
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(GroundMovementState))]
+[RequireComponent(typeof(GroundMovementState), typeof(FlyState))]
 public class HeroController : MonoBehaviour
 {
     private StateMachine _heroStateMachine;

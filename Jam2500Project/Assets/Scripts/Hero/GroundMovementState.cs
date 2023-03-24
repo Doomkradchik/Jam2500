@@ -4,6 +4,7 @@ using System.Collections;
 public class GroundMovementState : HeroState
 {
     private Rigidbody _rigidbody;
+    private Animator _animator;
 
     [Header("Properties")]
     [Tooltip("Ground movement")]
@@ -51,6 +52,13 @@ public class GroundMovementState : HeroState
         _rigidbody.isKinematic = false;
         _rigidbody.useGravity = true;
 
+        _animator = GetComponent<Animator>();
+        _animator.SetBool("onGround", true);
+
+        var _cameraController = Camera.main.GetComponent<RootMotion.CameraController>();
+        _cameraController.InfluenceOnCharacterRotation = false;
+       // _cameraController.smoothFollow = false;
+
         Ready = true;
     }
 
@@ -58,6 +66,7 @@ public class GroundMovementState : HeroState
     {
         StopAllCoroutines();
         Ready = false;
+        _animator.SetBool("onGround", false);
     }
 
 
@@ -98,7 +107,8 @@ public class GroundMovementState : HeroState
         switch (state)
         {
             case MovementState.Idle:
-                return;
+                speed = 0;
+                break;
             case MovementState.Walk:
                 speed = _movementProperties._walkSpeed;
                 break;
@@ -107,13 +117,16 @@ public class GroundMovementState : HeroState
                 break;
         }
 
+        _animator.SetInteger("speedStep", (int)state);
+        _animator.SetBool("isMoving", ((int)state) != 0);
+
+
         var targetAngle = Mathf.Atan2(plane.x, plane.z) * Mathf.Rad2Deg;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y,
             targetAngle, ref _movementProperties._angleVelocity, _movementProperties._smoothTime);
 
         var offset = plane * speed * Time.fixedDeltaTime;
 
-        // _rigidbody.MovePosition(_rigidbody.position + offset);
         transform.position += offset;
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
